@@ -8,15 +8,24 @@ const game = {
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
   },
   prevGuesses: [],
+  
   getGuess(guess) {
-    let currentGuess = -1;
+    let currentGuess = guess;
     if(currentGuess === -1){
       return console.log(`Enter a numerical guess between ${this.smallestNum} and ${this.biggestNum} inside the console:`)
     } else {
-
+      if (isNaN(parseInt(guess)) === true) {
+        console.log(guess)
+        return `I am sorry to inform you, but your guess, ${guess}, isn't a number. Try again.`
+      } else if (guess > this.biggestNum || guess < this.smallestNum) {
+        console.log(guess)
+        return `Please pick a number that is ${this.smallestNum} to ${this.biggestNum}.`
+      } else {
+        return currentGuess = guess
+      }
     }
-  }
+  },
 };
 
 
-game.getGuess();
+game.getGuess(-1);
