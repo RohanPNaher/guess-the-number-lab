@@ -9,11 +9,16 @@ const game = {
       console.log(this.secretNum)
     // Put a do while loop - while 'current guess is not secretNum' push currentGuess to prevGuess and prompt to get guess again
     // while () {
-    while (this.getGuess.currentGuess !== this.secretNum) {
-      this.getGuess()
-      this.prevGuesses.push(this.getGuess.currentGuess)
+    let playGuess 
+    
+    //Find a way to have this work with strict operator 
+    while (this.playGuess != this.secretNum) {
+      this.playGuess = this.getGuess()
+      console.log(this.playGuess)
+      this.prevGuesses.push(this.playGuess)
       console.log(this.prevGuesses)
     }
+    return playGuess = this.secretNum
 
     // }
   },
