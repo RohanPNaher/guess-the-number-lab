@@ -6,9 +6,15 @@ const game = {
   play: function() {
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
+      console.log(this.secretNum)
     // Put a do while loop - while 'current guess is not secretNum' push currentGuess to prevGuess and prompt to get guess again
     // while () {
-      
+    while (this.getGuess.currentGuess !== this.secretNum) {
+      this.getGuess()
+      this.prevGuesses.push(this.getGuess.currentGuess)
+      console.log(this.prevGuesses)
+    }
+
     // }
   },
   prevGuesses: [],
@@ -19,17 +25,13 @@ const game = {
 
     // undefined decl
     let currentGuess;
-
-    //Non-number guess
-    if (isNaN(guess) === true) {
-      return `I am sorry to inform you, but your guess, ${guess}, isn't a number. Try again.`
-    } else if (guess > this.biggestNum || guess < this.smallestNum) {
-      //Guess over biggestNum or under smallestNum
-      return `Please pick a number that is ${this.smallestNum} to ${this.biggestNum}.`
-    } else {
-      //Moves forward with player guess
-      return currentGuess = guess
+    
+    while (isNaN(guess) === true || guess > this.biggestNum || guess < this.smallestNum) {
+      guess = prompt(`Your guess, ${guess}, isn't valid. Please enter a numerical guess between ${this.smallestNum} and ${this.biggestNum}`)
     }
+
+    //Moves forward with player guess
+    return currentGuess = guess
   },
 };
 
