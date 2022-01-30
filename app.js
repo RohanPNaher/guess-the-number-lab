@@ -3,67 +3,69 @@ const game = {
   biggestNum: 100,
   smallestNum: 1,
   secretNum: null,
+  prevGuesses: [],
   play: function() {
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
-      console.log(this.secretNum)
-    // Put a do while loop - while 'current guess is not secretNum' push currentGuess to prevGuess and prompt to get guess again
-    // while () {
-    let playGuess 
+      // console.log(this.secretNum)
+
+    let playGuess;
     
     //Find a way to have this work with strict operator 
     while (this.playGuess != this.secretNum) {
       this.playGuess = this.getGuess()
-      console.log(this.playGuess)
       this.prevGuesses.push(this.playGuess)
-      console.log(this.prevGuesses)
-    }
-    return playGuess = this.secretNum
 
-    // }
+      //Gives alerts during gameplay
+      this.render()
+    }
+
+    //End game
+    return playGuess = this.secretNum
   },
-  prevGuesses: [],
   
   getGuess() {
-    //prompt
+    //Prompt
     let guess = prompt(`Enter a numerical guess between ${this.smallestNum} and ${this.biggestNum} and please open your console`);
 
     // undefined decl
     let currentGuess;
     
+    //Catch all for invalid values
     while (isNaN(guess) === true || guess > this.biggestNum || guess < this.smallestNum) {
-      guess = prompt(`Your guess, ${guess}, isn't valid. Please enter a numerical guess between ${this.smallestNum} and ${this.biggestNum}`)
+      guess = prompt(`Your guess, ${guess}, isn't valid. Please enter a numerical guess between ${this.smallestNum} and ${this.biggestNum}. You have already guessed: ${this.prevGuesses.join(" ")}.`)
     }
 
     //Moves forward with player guess
     return currentGuess = guess
+  },
+
+  render( ) {
+    let totalAmountGuess = this.prevGuesses.length;
+    let totalGuesses = this.prevGuesses.join(" ");
+    let lastGuessed = this.prevGuesses[this.prevGuesses.length - 1];
+    let status;
+
+    if (lastGuessed == this.secretNum && totalAmountGuess === 1) {
+      status = `You guessed ${this.secretNum} in only one guess?!`;
+    } else if (lastGuessed == this.secretNum) {
+      //Win
+      status = `Congrats! You guessed the correct number, ${this.secretNum}, in ${totalAmountGuess} guesses! Refresh the browser to play again!`;
+    } else if (lastGuessed > this.secretNum) {
+      //High
+      status = `Your guess is too high. Your previous guesses are: ${totalGuesses}.`
+    } else if (lastGuessed < this.secretNum) {
+      //Low
+      status = `Your guess is too low. Your previous guesses are: ${totalGuesses}.`
+    } else {
+      //Broke
+      status = 'Refresh the page, the game broke!'
+    }
+
+    return alert(status)
   },
 };
 
 
 game.play();
 
-
-// ## Tasks
-
-// Completing the following tasks will result in a working *Guess the Number* game:
-
-// 1. Add a `prevGuesses` property to the `game` object initialized to an empty array.
-// 2. Add a `getGuess` method to `game` that prompts the player to enter a guess with a message formatted as: *Enter a guess between [smallestNum] and [biggestNum].*
-// Hint - use a template literal for the prompt message.
-// 3. Ensure that the `getGuess` method returns a value that:
-//     - Is a *number*, not a *string*.
-//     - Is between `smallestNum` and `biggestNum`, inclusive.
-//     - Hints:
-//         - This is a great use case for a `while` loop.
-//         - `parseInt` returns `NaN` if the string cannot be parsed into a number.
-// 4. From within the `play` method, invoke the `getGuess` method from inside a loop, and add the new guess to the `prevGuesses` array.
-//     - Hint: this is an excellent use for a while loop (or even a do...while loop!)
-// 5. Add a `render` method to `game` that `play` will call after a guess has been made that alerts:
-//     - If the secret has been guessed: `Congrats! You guessed the number in [number of prevGuesses]!`
-//     - Otherwise: `Your guess is too [high|low] Previous guesses: x, x, x, x`
-//     - Hints:
-//         - `render` won’t be able to access any of `play`’s local variables, e.g., `guess`, so be sure pass `render` any arguments as needed (you may not have built your program to use any, that's ok if that's the case!)
-//         - Template literals not only have interpolation, but they also honor whitespace - including line breaks!
-//         - The list of previous guesses can be generated using the array `join` method.
-// 6. The `play` method should end (`return`) when the guess matches `secretNum`.
