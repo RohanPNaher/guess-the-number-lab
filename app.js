@@ -12,8 +12,8 @@ const game = {
 
     let playGuess;
     
-    //Find a way to have this work with strict operator 
-    while (this.playGuess != this.secretNum) {
+    //Player guesses until they have the right number
+    while (parseInt(this.playGuess) !== this.secretNum) {
       this.playGuess = this.getGuess()
       this.prevGuesses.push(this.playGuess)
 
@@ -27,7 +27,7 @@ const game = {
   
   getGuess() {
     //Prompt
-    let guess = prompt(`Enter a numerical guess between ${this.smallestNum} and ${this.biggestNum} and please open your console`);
+    let guess = prompt(`Enter a numerical guess between ${this.smallestNum} and ${this.biggestNum}. You have already guessed: ${this.prevGuesses.join(" ")}.`);
 
     // undefined decl
     let currentGuess;
