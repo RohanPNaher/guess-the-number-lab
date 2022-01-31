@@ -16,7 +16,8 @@ const game = {
     while (parseInt(this.playGuess) !== this.secretNum) {
       this.playGuess = this.getGuess()
       this.prevGuesses.push(this.playGuess)
-
+      
+      this.newNums()
       //Gives alerts during gameplay
       this.render()
     }
@@ -64,6 +65,15 @@ const game = {
     }
 
     return alert(status)
+  },
+
+
+  newNums() {
+    if (this.prevGuesses[this.prevGuesses.length - 1] < this.secretNum){
+      return this.smallestNum = this.prevGuesses[this.prevGuesses.length - 1]
+    } else if (this.prevGuesses[this.prevGuesses.length - 1] > this.secretNum) {
+      return this.biggestNum = this.prevGuesses[this.prevGuesses.length - 1]
+    }
   },
 };
 
