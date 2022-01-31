@@ -1,10 +1,13 @@
 const game = {
   title: 'Guess the Number!',
-  biggestNum: 100,
-  smallestNum: 1,
+  biggestNum: null,
+  smallestNum: null,
   secretNum: null,
   prevGuesses: [],
   play: function() {
+    //Set the range before generating the secretNum
+    this.getRange()
+    //Generate secretNum from user defined range
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
       // No cheating!
@@ -17,6 +20,7 @@ const game = {
       this.playGuess = this.getGuess()
       this.prevGuesses.push(this.playGuess)
       
+      //Changes the low/high so numbers guessed lower/higher than previous guess would be invalid
       this.newNums()
       //Gives alerts during gameplay
       this.render()
@@ -75,6 +79,18 @@ const game = {
       return this.biggestNum = this.prevGuesses[this.prevGuesses.length - 1]
     }
   },
+
+  getRange() {
+    // Do while loop starts the prompt. While loop won't work here
+    do {
+      this.smallestNum = parseInt(prompt(`Please pick a number to be your lowest range`))
+    } while (isNaN(this.smallestNum))
+
+    while (isNaN(this.biggestNum) || this.biggestNum < this.smallestNum) {
+      this.biggestNum = parseInt(prompt(`Please pick a number to be your highest range. It cannot be lower than ${this.smallestNum}.`))
+    }
+  },
+
 };
 
 
