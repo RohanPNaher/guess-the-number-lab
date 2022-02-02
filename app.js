@@ -34,9 +34,6 @@ const game = {
     //Prompt
     let guess = prompt(`Enter a numerical guess between ${this.smallestNum} and ${this.biggestNum}. You have already guessed: ${this.prevGuesses.join(" ")}.`);
 
-    // undefined decl
-    let currentGuess;
-    console.log(guess)
     //Catch all for invalid values
     while (isNaN(guess) === true || parseInt(guess) > this.biggestNum || parseInt(guess) < this.smallestNum || guess === '') {
       guess = prompt(`Your guess, ${guess}, isn't valid. Please enter a numerical guess between ${this.smallestNum} and ${this.biggestNum}. You have already guessed: ${this.prevGuesses.join(" ")}.`)
