@@ -36,37 +36,31 @@ const game = {
 
     // undefined decl
     let currentGuess;
-    
+    console.log(guess)
     //Catch all for invalid values
-    while (isNaN(guess) === true || guess > this.biggestNum || guess < this.smallestNum) {
+    while (isNaN(guess) === true || parseInt(guess) > this.biggestNum || parseInt(guess) < this.smallestNum || guess === '') {
       guess = prompt(`Your guess, ${guess}, isn't valid. Please enter a numerical guess between ${this.smallestNum} and ${this.biggestNum}. You have already guessed: ${this.prevGuesses.join(" ")}.`)
     }
-
     //Moves forward with player guess
-    return currentGuess = guess
+    return guess
   },
 
   render( ) {
     let totalAmountGuess = this.prevGuesses.length;
     let totalGuesses = this.prevGuesses.join(" ");
     let lastGuessed = this.prevGuesses[this.prevGuesses.length - 1];
-    let status;
-
-    if (lastGuessed == this.secretNum && totalAmountGuess === 1) {
-      status = `You guessed ${this.secretNum} in only one guess?!`;
-    } else if (lastGuessed == this.secretNum) {
-      //Win
-      status = `Congrats! You guessed the correct number, ${this.secretNum}, in ${totalAmountGuess} guesses! Refresh the browser to play again!`;
-    } else if (lastGuessed > this.secretNum) {
-      //High
-      status = `Your guess is too high. Your previous guesses are: ${totalGuesses}.`
-    } else if (lastGuessed < this.secretNum) {
-      //Low
-      status = `Your guess is too low. Your previous guesses are: ${totalGuesses}.`
-    } else {
-      //Broke
-      status = 'Refresh the page, the game broke!'
-    }
+    let status; 
+    
+    
+    lastGuessed == this.secretNum && totalAmountGuess === 1 ? status = `You guessed ${this.secretNum} in only one guess?!`
+    // Win
+    : lastGuessed == this.secretNum ? status = `Congrats! You guessed the correct number, ${this.secretNum}, in ${totalAmountGuess} guesses! Refresh the browser to play again!`
+    // Low
+    : lastGuessed < this.secretNum ? status = `Your guess is too low. Your previous guesses are: ${totalGuesses}.`
+    // High
+    : lastGuessed > this.secretNum ? status = `Your guess is too high. Your previous guesses are: ${totalGuesses}.`
+    // broke
+    : status = 'Refresh the page, the game broke!'
 
     return alert(status)
   },
@@ -86,9 +80,9 @@ const game = {
       this.smallestNum = parseInt(prompt(`Please pick a number to be your lowest range`))
     } while (isNaN(this.smallestNum))
 
-    while (isNaN(this.biggestNum) || this.biggestNum < this.smallestNum) {
+    do {
       this.biggestNum = parseInt(prompt(`Please pick a number to be your highest range. It cannot be lower than ${this.smallestNum}.`))
-    }
+    } while (isNaN(this.biggestNum) || this.biggestNum < this.smallestNum)
   },
 
 };
